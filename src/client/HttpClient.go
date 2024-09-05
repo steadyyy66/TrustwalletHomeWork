@@ -10,7 +10,20 @@ import (
 	"strconv"
 )
 
-func GetLatestBlockNumber() (int64, error) {
+type OutBizApi interface {
+	GetLatestBlockNumber() (int64, error)
+	GetBlockByNumber(blockNumber int) (*GetBlockByNumberRespResult, error)
+}
+type OutBizApiImpl struct {
+}
+
+var IOutBizApi OutBizApi
+
+func init() {
+	IOutBizApi = new(OutBizApiImpl)
+}
+
+func (p *OutBizApiImpl) GetLatestBlockNumber() (int64, error) {
 
 	payload := map[string]interface{}{
 		"jsonrpc": "2.0",
@@ -44,7 +57,7 @@ func GetLatestBlockNumber() (int64, error) {
 	return hexToInt64(result["result"].(string))
 }
 
-func GetBlockByNumber(blockNumber int) (*GetBlockByNumberRespResult, error) {
+func (p *OutBizApiImpl) GetBlockByNumber(blockNumber int) (*GetBlockByNumberRespResult, error) {
 
 	params := []interface{}{fmt.Sprintf("0x%x", blockNumber), true}
 	payload := map[string]interface{}{

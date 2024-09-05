@@ -36,7 +36,7 @@ func (p *EthereumParserImpl) GetTransactions(address string) []storage.Transacti
 
 func (p *EthereumParserImpl) WatchBlock() error {
 	for {
-		latestBlock, err := client.GetLatestBlockNumber()
+		latestBlock, err := client.IOutBizApi.GetLatestBlockNumber()
 		if err != nil {
 			slog.Error("GetLatestBlockNumber：", "err", err)
 			return err
@@ -51,7 +51,7 @@ func (p *EthereumParserImpl) WatchBlock() error {
 
 		if int(latestBlock) > p.GetCurrentBlock() {
 			for blockNum := p.GetCurrentBlock() + 1; blockNum <= int(latestBlock); blockNum++ {
-				block, err := client.GetBlockByNumber(blockNum)
+				block, err := client.IOutBizApi.GetBlockByNumber(blockNum)
 				if err != nil {
 					slog.Error("GetBlockByNumber：", "err", err)
 					return err

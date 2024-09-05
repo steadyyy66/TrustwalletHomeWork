@@ -2,7 +2,6 @@ package parser
 
 import (
 	"TrustwalletHomeWork/src/storage"
-	"sync"
 )
 
 type Parser interface {
@@ -22,7 +21,5 @@ type Parser interface {
 var IParese Parser
 
 func init() {
-	IParese = &EthereumParserImpl{
-		mu: sync.RWMutex{},
-	}
+	IParese = &EthereumParserImpl{}
 }
