@@ -1,7 +1,7 @@
-package main
+package test
 
 import (
-	"TrustwalletHomeWork/src/client"
+	"TrustwalletHomeWork/src/api"
 	. "TrustwalletHomeWork/src/parser"
 	"testing"
 	"time"
@@ -14,13 +14,13 @@ func (m MockOutBiz4TestGetCurrentBlock) GetLatestBlockNumber() (int64, error) {
 	return 4660, nil
 }
 
-func (m MockOutBiz4TestGetCurrentBlock) GetBlockByNumber(blockNumber int) (*client.GetBlockByNumberRespResult, error) {
+func (m MockOutBiz4TestGetCurrentBlock) GetBlockByNumber(blockNumber int) (*api.GetBlockByNumberRespResult, error) {
 	panic("implement me")
 }
 
 func TestGetCurrentBlock(t *testing.T) {
 
-	client.IOutBizApi = new(MockOutBiz4TestGetCurrentBlock)
+	api.IOutBizApi = new(MockOutBiz4TestGetCurrentBlock)
 
 	parser := NewEthereumParser()
 	go parser.WatchBlock()

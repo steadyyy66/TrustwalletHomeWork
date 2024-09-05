@@ -1,7 +1,7 @@
 package parser
 
 import (
-	"TrustwalletHomeWork/src/client"
+	"TrustwalletHomeWork/src/api"
 	"TrustwalletHomeWork/src/storage"
 	"log/slog"
 	"sync"
@@ -36,7 +36,7 @@ func (p *EthereumParserImpl) GetTransactions(address string) []storage.Transacti
 
 func (p *EthereumParserImpl) WatchBlock() error {
 	for {
-		latestBlock, err := client.IOutBizApi.GetLatestBlockNumber()
+		latestBlock, err := api.IOutBizApi.GetLatestBlockNumber()
 		if err != nil {
 			slog.Error("GetLatestBlockNumber：", "err", err)
 			return err
@@ -51,7 +51,7 @@ func (p *EthereumParserImpl) WatchBlock() error {
 
 		if int(latestBlock) > p.GetCurrentBlock() {
 			for blockNum := p.GetCurrentBlock() + 1; blockNum <= int(latestBlock); blockNum++ {
-				block, err := client.IOutBizApi.GetBlockByNumber(blockNum)
+				block, err := api.IOutBizApi.GetBlockByNumber(blockNum)
 				if err != nil {
 					slog.Error("GetBlockByNumber：", "err", err)
 					return err
@@ -68,7 +68,7 @@ func (p *EthereumParserImpl) WatchBlock() error {
 	}
 }
 
-func (p *EthereumParserImpl) parseTransactions(block *client.GetBlockByNumberRespResult) {
+func (p *EthereumParserImpl) parseTransactions(block *api.GetBlockByNumberRespResult) {
 
 	for _, tx := range block.Transactions {
 		p.mu.RLock()

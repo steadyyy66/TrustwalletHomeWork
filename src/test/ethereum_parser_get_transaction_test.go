@@ -1,7 +1,7 @@
-package main
+package test
 
 import (
-	"TrustwalletHomeWork/src/client"
+	"TrustwalletHomeWork/src/api"
 	parser2 "TrustwalletHomeWork/src/parser"
 	"testing"
 	"time"
@@ -24,24 +24,24 @@ func (m MockOutBiz4TestGetTransactions) GetLatestBlockNumber() (int64, error) {
 	return 4660, nil
 }
 
-var httpTransactions []client.GetBlockByNumberRespResultTransactions
+var httpTransactions []api.GetBlockByNumberRespResultTransactions
 
 /*
 adress
 */
 func init() {
-	txn1 := client.GetBlockByNumberRespResultTransactions{
+	txn1 := api.GetBlockByNumberRespResultTransactions{
 		From:  "0x1234",
 		To:    "0x5678",
 		Value: "1111",
 	}
-	txn2 := client.GetBlockByNumberRespResultTransactions{
+	txn2 := api.GetBlockByNumberRespResultTransactions{
 		From:  "0x1234",
 		To:    "0x9abc",
 		Value: "2222",
 	}
 
-	txn3 := client.GetBlockByNumberRespResultTransactions{
+	txn3 := api.GetBlockByNumberRespResultTransactions{
 		From:  "0x5678",
 		To:    "0x1234",
 		Value: "3333",
@@ -50,9 +50,9 @@ func init() {
 
 }
 
-func (m MockOutBiz4TestGetTransactions) GetBlockByNumber(blockNumber int) (*client.GetBlockByNumberRespResult, error) {
+func (m MockOutBiz4TestGetTransactions) GetBlockByNumber(blockNumber int) (*api.GetBlockByNumberRespResult, error) {
 
-	resp := &client.GetBlockByNumberRespResult{
+	resp := &api.GetBlockByNumberRespResult{
 		Transactions: httpTransactions,
 	}
 
@@ -64,7 +64,7 @@ TestGetTransactions ,also test Subscribe
 */
 func TestGetTransactions(t *testing.T) {
 
-	client.IOutBizApi = new(MockOutBiz4TestGetTransactions)
+	api.IOutBizApi = new(MockOutBiz4TestGetTransactions)
 
 	parser := parser2.NewEthereumParser()
 	parser.Subscribe("0x1234")

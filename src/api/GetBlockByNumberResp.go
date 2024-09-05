@@ -1,7 +1,7 @@
-package client
+package api
 
 // define data stracture for GetBlockByNumberResp
-// remote many unrelated filed
+// simply data stracture ,remote unrelated filed
 type GetBlockByNumberResp struct {
 	Jsonrpc string                     `json:"jsonrpc"`
 	Result  GetBlockByNumberRespResult `json:"result"`

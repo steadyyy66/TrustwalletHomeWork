@@ -1,7 +1,7 @@
-package client
+package api
 
 import (
-	"TrustwalletHomeWork/src/constants"
+	"TrustwalletHomeWork/src/config"
 	"bytes"
 	"encoding/json"
 	"fmt"
@@ -28,33 +28,33 @@ func (p *OutBizApiImpl) GetLatestBlockNumber() (int64, error) {
 	payload := map[string]interface{}{
 		"jsonrpc": "2.0",
 		"id":      1,
-		"method":  constants.ETH_BLOCKNUMBER,
+		"method":  config.ETH_BLOCKNUMBER,
 		"params":  []interface{}{},
 	}
 
 	jsonPayload, err := json.Marshal(payload)
 	if err != nil {
-		return constants.DEFALUT_ERR_NUMBER, err
+		return config.JSON_MARSHAL, err
 	}
 	slog.Debug("Received response from Ethereum node", "result", jsonPayload, "err", err)
 
-	resp, err := http.Post(constants.ETH_URL, "application/json", bytes.NewBuffer(jsonPayload))
+	resp, err := http.Post(config.ETH_URL, "application/json", bytes.NewBuffer(jsonPayload))
 	if err != nil {
 		slog.Error("request error:", "err", err)
-		return constants.DEFALUT_ERR_NUMBER, err
+		return config.DEFALUT_ERR_NUMBER, err
 	}
 	defer resp.Body.Close()
 
 	var result map[string]interface{}
 	err = json.NewDecoder(resp.Body).Decode(&result)
 	if err != nil {
-		slog.Error("NewDecoder error:", err)
-		return constants.DEFALUT_ERR_NUMBER, err
+		slog.Error("NewDecoder error:", "err msg", err)
+		return config.JSON_DECODE, err
 	}
 
 	slog.Debug("Received response from Ethereum node", "result", result, "err", err)
 
-	return hexToInt64(result["result"].(string))
+	return HexToInt64(result["result"].(string))
 }
 
 func (p *OutBizApiImpl) GetBlockByNumber(blockNumber int) (*GetBlockByNumberRespResult, error) {
@@ -63,7 +63,7 @@ func (p *OutBizApiImpl) GetBlockByNumber(blockNumber int) (*GetBlockByNumberResp
 	payload := map[string]interface{}{
 		"jsonrpc": "2.0",
 		"id":      1,
-		"method":  constants.ETH_GETBLOCKBYNUMBER,
+		"method":  config.ETH_GETBLOCKBYNUMBER,
 		"params":  params,
 	}
 
@@ -73,7 +73,7 @@ func (p *OutBizApiImpl) GetBlockByNumber(blockNumber int) (*GetBlockByNumberResp
 	}
 
 	slog.Debug("Received response from Ethereum node", "params", params, "err", err)
-	resp, err := http.Post(constants.ETH_URL, "application/json", bytes.NewBuffer(jsonPayload))
+	resp, err := http.Post(config.ETH_URL, "application/json", bytes.NewBuffer(jsonPayload))
 	if err != nil {
 		return nil, err
 	}
@@ -91,6 +91,6 @@ func (p *OutBizApiImpl) GetBlockByNumber(blockNumber int) (*GetBlockByNumberResp
 	return &result.Result, err
 }
 
-func hexToInt64(hex string) (int64, error) {
+func HexToInt64(hex string) (int64, error) {
 	return strconv.ParseInt(hex[2:], 16, 64)
 }
