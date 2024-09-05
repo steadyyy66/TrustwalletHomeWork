@@ -64,7 +64,7 @@ func (p *EthereumParserImpl) WatchBlock() error {
 		}
 
 		// Sleep for a while before checking for new blocks
-		time.Sleep(1 * time.Second)
+		time.Sleep(1 * time.Second * 5)
 	}
 }
 

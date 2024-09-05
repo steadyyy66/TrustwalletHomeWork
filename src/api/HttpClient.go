@@ -36,7 +36,7 @@ func (p *OutBizApiImpl) GetLatestBlockNumber() (int64, error) {
 	if err != nil {
 		return config.JSON_MARSHAL, err
 	}
-	slog.Debug("Received response from Ethereum node", "result", jsonPayload, "err", err)
+	slog.Debug("Before request GetLatestBlockNumber", "result", jsonPayload, "err", err)
 
 	resp, err := http.Post(config.ETH_URL, "application/json", bytes.NewBuffer(jsonPayload))
 	if err != nil {
@@ -52,7 +52,7 @@ func (p *OutBizApiImpl) GetLatestBlockNumber() (int64, error) {
 		return config.JSON_DECODE, err
 	}
 
-	slog.Debug("Received response from Ethereum node", "result", result, "err", err)
+	slog.Debug("Received response from GetLatestBlockNumber", "result", result, "err", err)
 
 	return HexToInt64(result["result"].(string))
 }
@@ -72,7 +72,7 @@ func (p *OutBizApiImpl) GetBlockByNumber(blockNumber int) (*GetBlockByNumberResp
 		return nil, err
 	}
 
-	slog.Debug("Received response from Ethereum node", "params", params, "err", err)
+	slog.Debug("Before send request GetBlockByNumber", "params", params, "err", err)
 	resp, err := http.Post(config.ETH_URL, "application/json", bytes.NewBuffer(jsonPayload))
 	if err != nil {
 		return nil, err
@@ -86,7 +86,7 @@ func (p *OutBizApiImpl) GetBlockByNumber(blockNumber int) (*GetBlockByNumberResp
 		return nil, err
 	}
 
-	slog.Debug("Received response from Ethereum node", "result", result, "err", err)
+	slog.Debug("Received response from GetBlockByNumber", "len(result.Result.Transactions):", len(result.Result.Transactions), "err", err)
 
 	return &result.Result, err
 }

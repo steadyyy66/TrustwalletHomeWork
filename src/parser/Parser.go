@@ -11,7 +11,6 @@ type Parser interface {
 	GetCurrentBlock() int
 
 	// add address to observer
-
 	Subscribe(address string) bool
 
 	// list of inbound or outbound transactions for an address

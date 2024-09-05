@@ -17,7 +17,6 @@ func main() {
 		err := ethParser.WatchBlock()
 		if err != nil {
 			slog.Error("Error parsing blocks: %v", err)
-			//todo should panic?
 		}
 	}()
 	slog.Info("server started")
