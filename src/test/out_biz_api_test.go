@@ -13,6 +13,8 @@ import (
 	"testing"
 )
 
+const LOCALHOST = "http://127.0.0.1:45003"
+
 func TestGetLatestBlockNumber(t *testing.T) {
 	// 创建测试用例
 	testCases := []struct {
@@ -42,10 +44,11 @@ func TestGetLatestBlockNumber(t *testing.T) {
 			defer ts.Close()
 
 			// 替换常量中的URL为模拟服务器的URL
-			oldUrl := "localhost"
-			config.ETH_URL = ts.URL
+			oldUrl := config.ETH_URL
+			ts.URL = LOCALHOST
+			config.ETH_URL = LOCALHOST
 			defer func() { config.ETH_URL = oldUrl }()
-			ts.URL = oldUrl
+
 			// 创建待测试的对象
 			p := &api.OutBizApiImpl{}
 
