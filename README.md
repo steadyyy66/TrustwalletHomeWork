@@ -24,7 +24,7 @@ git clone https://github.com/steadyyy66/TrustwalletHomeWork.git
 ```
 2. Navigate to the project directory:
 ```
-cd github/steadyyy66/TrustwalletHomeWork/src/main
+cd TrustwalletHomeWork/src/main
 ```
 3. Build the executable:
 ```
@@ -62,7 +62,7 @@ The Ethereum Transaction Parser consists of the following main components:
 ## 7. Testing
 To run the tests:
 ```
-1. cd github/steadyyy66/TrustwalletHomeWork
+1. cd TrustwalletHomeWork
 
 // test TestGetCurrentBlock and TestSubscrib
 2. go test -v src/test/ethereum_parser_get_current_block_test.go
