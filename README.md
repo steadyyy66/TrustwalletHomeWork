@@ -54,8 +54,8 @@ go build main.go
 ## 5. Architecture Design
 
 The Ethereum Transaction Parser consists of the following main components:
-1. Parser: Defined and implemented the Parser interface. watch Ethereum’s blocks change.
-2. API : HTTP server exposing endpoints for interaction with the parser.
+1. Parser: Defined and implemented the Parser interface. Watching Ethereum’s blocks change.
+2. API : Ethereum external http interface encapsulation.
 3. Storage: stored the transaction record in memory. But can replace it with a more robust database solution.
 4. Config: Definition of constants and variables
 5. Tests: Unit tests for the parser components and outer api.
