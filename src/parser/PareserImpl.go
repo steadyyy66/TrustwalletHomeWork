@@ -35,6 +35,8 @@ func (p *EthereumParserImpl) GetTransactions(address string) []storage.Transacti
 }
 
 func (p *EthereumParserImpl) WatchBlock() error {
+
+	slog.Info("---------WatchBlock Start-----------")
 	for {
 		latestBlock, err := api.IOutBizApi.GetLatestBlockNumber()
 		if err != nil {

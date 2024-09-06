@@ -19,7 +19,7 @@ func main() {
 			slog.Error("Error parsing blocks: %v", err)
 		}
 	}()
-	slog.Info("server started")
+	slog.Info("----------------server started----------------")
 	// Example usage
 	ethParser.Subscribe("0x13b98c8")
 

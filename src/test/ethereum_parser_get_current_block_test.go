@@ -1,6 +1,6 @@
 package test
 
-//This is file for TestGetCurrentBlock unit test
+//This is file for TestGetCurrentBlock and TestSubscribe unit test
 
 import (
 	"TrustwalletHomeWork/src/api"

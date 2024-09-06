@@ -14,6 +14,7 @@ type Transaction struct {
 	Value string
 }
 
+// Use in-memory storage now and replace with other data sources in future
 type Storage interface {
 	AddStorage(from, to, value string)
 	GetTransactions(address string) []Transaction
