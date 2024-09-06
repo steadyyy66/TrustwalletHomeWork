@@ -1,5 +1,7 @@
 package test
 
+//This is file for TestGetCurrentBlock unit test
+
 import (
 	"TrustwalletHomeWork/src/api"
 	. "TrustwalletHomeWork/src/parser"
@@ -7,6 +9,7 @@ import (
 	"time"
 )
 
+// Mock OutBiz for TestGetCurrentBlock
 type MockOutBiz4TestGetCurrentBlock struct {
 }
 

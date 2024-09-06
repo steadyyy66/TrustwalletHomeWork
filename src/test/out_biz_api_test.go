@@ -13,7 +13,7 @@ import (
 	"testing"
 )
 
-const LOCALHOST = "http://127.0.0.1:45003"
+const LOCALHOST = "localhost"
 
 func TestGetLatestBlockNumber(t *testing.T) {
 	// 创建测试用例
@@ -37,40 +37,41 @@ func TestGetLatestBlockNumber(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			// 创建模拟的http服务器
+			// create mock http
 			ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				fmt.Fprintln(w, tc.mockResponse)
 			}))
 			defer ts.Close()
 
-			// 替换常量中的URL为模拟服务器的URL
-			oldUrl := config.ETH_URL
+			// Replace the URL in the constant with the URL of the mock server
+			config.ETH_URL = ts.URL
+			defer func() { config.ETH_URL = LOCALHOST }()
 			ts.URL = LOCALHOST
-			config.ETH_URL = LOCALHOST
-			defer func() { config.ETH_URL = oldUrl }()
 
-			// 创建待测试的对象
 			p := &api.OutBizApiImpl{}
 
-			// 调用待测试的方法
-			result, err := p.GetLatestBlockNumber()
-
+			result, _ := p.GetLatestBlockNumber()
 			if tc.expectedResult != result {
-				t.Error("err", err)
+				t.Error("tc.expectedResult != result ", "tc.expectedResult:", tc.expectedResult, "result", result)
 			}
 
 		})
 	}
 }
 
+// test GetBlockByNumber by calling address "0x13b98c7", and then compare the result with data.json
+// data.json is the returned json data of the address "0x13b98c7" obtained in advance
 func TestGetBlockByNumber(t *testing.T) {
 
+	//when you run go test src/api/out_biz_api_test.go ,you need to replace the url for TestGetLatestBlockNumber
+	//had replace before
+	config.ETH_URL = "https://cloudflare-eth.com"
 	p := &api.OutBizApiImpl{}
 	intNumber, err := api.HexToInt64("0x13b98c7")
 	if err != nil {
 		t.Errorf("change number fail:%v", err)
 	}
-	// 调用待测试的方法
+
 	result, err := p.GetBlockByNumber(int(intNumber))
 	if err != nil {
 		t.Errorf("GetBlockByNumber err:%v", err)
@@ -95,7 +96,8 @@ func TestGetBlockByNumber(t *testing.T) {
 }
 
 func ReadJson(t *testing.T) (*api.GetBlockByNumberResp, error) {
-	// 打开JSON文件
+	// data.json is the returned json data of the address "0x13b98c7" obtained in advance
+	//To cooperate with the unit test
 	file, err := os.Open("data.json")
 	if err != nil {
 		log.Fatalf("fail to open file: %v", err)

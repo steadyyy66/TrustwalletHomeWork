@@ -1,5 +1,7 @@
 package test
 
+//This file for TestGetTransactions unit test
+//
 import (
 	"TrustwalletHomeWork/src/api"
 	parser2 "TrustwalletHomeWork/src/parser"
@@ -9,7 +11,7 @@ import (
 
 /*
 oct   hex
-4660 = 1234
+4660 = Ox1234
 */
 type MockOutBiz4TestGetTransactions struct {
 }
