@@ -76,7 +76,7 @@ func TestGetTransactions(t *testing.T) {
 	storageTransactionList := parser.GetTransactions("0x1234")
 
 	if len(storageTransactionList) != 3 {
-		t.Errorf("Expected current block to be 4660, got %d", len(storageTransactionList))
+		t.Errorf(" len(storageTransactionList) = 3, got %d", len(storageTransactionList))
 	}
 	for _, transaction := range storageTransactionList {
 		t.Logf("transaction.To %s,transaction.From %s, transaction.To %s", transaction.To, transaction.From, transaction.Value)

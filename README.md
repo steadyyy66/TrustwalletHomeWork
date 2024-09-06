@@ -1,12 +1,11 @@
 # TrustwalletHomeWork
 
-The Ethereum Transaction Parser is a Go-based tool designed to monitor and analyze transactions on the Ethereum blockchain. It provides real-time tracking of transactions for specified Ethereum addresses and offers an efficient way to retrieve and parse transaction data.
+The server is a Go-based tool designed to watch and analyze transactions on the Ethereum blockchain. It provides near real-time tracking of transactions for specified Ethereum addresses and offers an efficient way to retrieve and parse transaction record.
 
 Key features:
-- Real-time monitoring of Ethereum transactions
+- Near Real-time watching of Ethereum transactions
 - Address subscription system
 - Parsing and storage of transaction details
-- Concurrent processing for improved performance
 
 Technologies used:
 - Go (Golang)
@@ -61,5 +60,17 @@ The Ethereum Transaction Parser consists of the following main components:
 4. Config: Definition of constants and variables
 5. Tests: Unit tests for the parser components and outer api.
 ## 7. Testing
-
 To run the tests:
+```
+1. cd github/steadyyy66/TrustwalletHomeWork
+
+// test TestGetCurrentBlock and TestSubscrib
+2. go test -v src/test/ethereum_parser_get_current_block_test.go
+
+// test TestGetTransaction
+3. go test -v  src/test/ethereum_parser_get_transaction_test.go
+
+// test TestOutBizApi
+4. go test -v  src/test/out_biz_api_test.go 
+
+```
